@@ -1,0 +1,45 @@
+<!DOCTYPE html> 
+<html ng-app="clickApp">
+<head>
+<title>click event in AngularJS</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+
+<script>
+   //var storageItem= localStorage.getItem()
+   var clickApp = angular.module("clickApp", []);
+
+   clickApp.controller("MainCtrl", function($scope, db) {
+      $scope.saveItem = function() {
+         db.addItem($scope.username);
+         console.log("items: " + db.getItems());
+      };
+   })
+
+   clickApp.factory('db', function(){
+      var items = [];
+      var modify = {};
+
+      modify.addItem = function(item){
+         items.push(item);
+         return 'added item';
+      };
+
+      modify.getItems = function() {
+         return items;
+      }
+      return modify;
+   });
+
+</script>
+</head>
+
+<body ng-controller="MainCtrl">
+ <h3 >{{username}}</h3>
+
+ <form name="enteruser" ng-submit="saveItem(username)"> 
+   <input type="input" required placeholder="Username" ng-model="username" />
+   <input type="submit" value="submit" /> 
+ </form>
+</body>
+</html>   

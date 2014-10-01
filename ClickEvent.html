@@ -6,15 +6,24 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
 
 <script>
-   //var storageItem= localStorage.getItem()
+   //var storageItem= localStorage.getItem();
    var clickApp = angular.module("clickApp", []);
 
    clickApp.controller("MainCtrl", function($scope, db) {
       $scope.saveItem = function() {
-         db.addItem($scope.username);
+         db.addItem($scope.first);
+         db.addItem($scope.last);
+//         $scope.getApple();
          console.log("items: " + db.getItems());
       };
-   })
+
+      //$scope.getApple = function(){
+         $scope.apple = db.getItems();
+      //};
+
+
+
+   });
 
    clickApp.factory('db', function(){
       var items = [];
@@ -35,11 +44,15 @@
 </head>
 
 <body ng-controller="MainCtrl">
- <h3 >{{username}}</h3>
+ <h3 >{{first}} {{last}}</h3>
 
- <form name="enteruser" ng-submit="saveItem(username)"> 
-   <input type="input" required placeholder="Username" ng-model="username" />
+ <form name="enteruser" ng-submit="saveItem(first, last)"> 
+   <input type="input" required placeholder="first" ng-model="first" />
+   <input type="input" required placeholder="last" ng-model="last" />
    <input type="submit" value="submit" /> 
  </form>
+
+ <h3 ng-repeat="a in apple">{{a}}</h3>
+
 </body>
 </html>   
